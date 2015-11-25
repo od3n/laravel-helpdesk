@@ -38,7 +38,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">Laravel 5 {{-- This comment will not be present in the rendered HTML --}}</div>
             </div>
         </div>
     </body>
