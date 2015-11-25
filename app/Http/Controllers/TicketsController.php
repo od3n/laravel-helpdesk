@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Ticket;
+use Illuminate\Support\Facades\Auth;
 
 class TicketsController extends Controller
 {
@@ -26,7 +28,7 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        //
+        return view('tickets.create');
     }
 
     /**
@@ -37,7 +39,15 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ticket = new Ticket();
+        $ticket->title = request('title');
+        $ticket->content = request('content');
+        $ticket->slug = uniqid();
+        $ticket->user_id = Auth::user()->id;
+        $ticket->save();
+
+        return redirect('/')
+        ->withStatus('Your ticket has been created! Its unique id is ' . $ticket->slug);
     }
 
     /**
