@@ -18,7 +18,10 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        //
+        //$tickets = Ticket::all();
+        $tickets = Ticket::where('user_id', Auth::user()->id)->get();
+
+        return view('tickets.index', compact('tickets'));
     }
 
     /**
