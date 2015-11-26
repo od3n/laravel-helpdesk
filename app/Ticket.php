@@ -11,7 +11,7 @@ class Ticket extends Model
     	return $this->belongsTo('App\User');
     }
 
-    public function comments($value='')
+    public function comments()
     {
     	return $this->hasMany('App\Comment', 'ticket_id');
     }
