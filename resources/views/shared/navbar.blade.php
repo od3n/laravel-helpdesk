@@ -8,7 +8,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('/') }}">Learning Laravel</a>
+            <a class="navbar-brand" href="{{ url('/') }}">Laravel Helpdesk</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -18,11 +18,15 @@
                 <li class="{{ set_active('/') }}"><a href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a></li>
                 <li class="{{ set_active('about')}}"><a href="{{ url('/about') }}">About</a></li>
                 <li class="{{ set_active('contact') }}"><a href="{{ url('/contact') }}">Contact</a></li>
+                @if (Auth::check())
+                    <li class="{{ set_active('tickets/create') }}"><a href="{{ url('/tickets/create') }}">Submit new Ticket</a></li>
+                    <li class="{{ set_active('tickets') }}"><a href="{{ url('/tickets') }}">View Tickets</a></li>
+                @endif
                 <li class="dropdown {{ set_active('users/*') }} {{ set_active('password/*') }}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Member <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         @if (Auth::check())
-                            <li><a href="{{ url('/users/profile') }}">{{ Auth::user()->name }}</a></li>
+                            <li class="{{ set_active('users/profile') }}"><a href="{{ url('/users/profile') }}">{{ Auth::user()->name }}</a></li>
                             <li><a href="{{ url('/users/logout') }}">Logout</a></li>
                         @else
                             <li class="{{ set_active('users/register') }}"><a href="{{ url('/users/register') }}">Register</a></li>
