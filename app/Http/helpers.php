@@ -22,4 +22,15 @@ function set_status($status)
 	return $statuses[$status];
 }
 
+function get_statuses()
+{
+	$statuses = [
+	    1 => 'Pending', 
+	    2 => 'In Progress', 
+	    3 => 'Completed'
+	];
+
+	return $statuses;
+}
+
 ?>

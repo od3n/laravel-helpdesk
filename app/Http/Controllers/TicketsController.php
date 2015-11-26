@@ -49,7 +49,7 @@ class TicketsController extends Controller
         $ticket->user_id = Auth::user()->id;
         $ticket->save();
 
-        return redirect('/')
+        return redirect('tickets')
         ->withStatus('Your ticket has been created! Its unique id is ' . $ticket->slug);
     }
 
@@ -59,9 +59,11 @@ class TicketsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+
+        return view('tickets.show', compact('ticket'));
     }
 
     /**
@@ -70,9 +72,11 @@ class TicketsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+
+        return view('tickets.edit', compact('ticket'));
     }
 
     /**
@@ -82,9 +86,16 @@ class TicketsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+        $ticket->title = request('title');
+        $ticket->content = request('content');
+        $ticket->status = request('status');
+        $ticket->save();
+
+        return redirect('tickets')
+        ->withStatus('Your ticket has been updated');
     }
 
     /**
@@ -93,8 +104,12 @@ class TicketsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $ticket = Ticket::whereSlug($slug)->firstOrFail();
+        $ticket->delete();
+
+        return redirect('tickets')
+        ->withStatus('This ticket ' . $slug . ' has been deleted!');
     }
 }

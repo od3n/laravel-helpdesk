@@ -39,4 +39,6 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 // Ticket routes
+Route::post('tickets/{slug}', 'TicketsController@destroy');
+Route::post('tickets/{slug}/edit', 'TicketsController@update');
 Route::resource('tickets', 'TicketsController');

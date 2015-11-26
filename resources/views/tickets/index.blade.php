@@ -7,6 +7,9 @@
         	<div class="panel-heading">
         		<h2>Tickets ({{ $tickets->count() }})</h2>
         	</div>
+
+            @include('shared.notification')
+            
         	@if ($tickets->isEmpty())
         		<p class="alert alert-info">There is no ticket.</p>
         	@else
