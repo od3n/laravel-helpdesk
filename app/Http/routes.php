@@ -42,3 +42,6 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::post('tickets/{slug}', 'TicketsController@destroy');
 Route::post('tickets/{slug}/edit', 'TicketsController@update');
 Route::resource('tickets', 'TicketsController');
+
+// Comment routes
+Route::post('comments', 'CommentsController@store');
