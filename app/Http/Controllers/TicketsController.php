@@ -48,6 +48,7 @@ class TicketsController extends Controller
         $ticket->content = request('content');
         $ticket->slug = uniqid();
         $ticket->user_id = Auth::user()->id;
+        $ticket->status = 5;
         $ticket->save();
 
         return redirect('tickets')

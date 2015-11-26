@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Comment;
+use App\Http\Requests\CommentFormRequest;
 
 class CommentsController extends Controller
 {
@@ -36,15 +37,22 @@ class CommentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentFormRequest $request)
     {
         $comment = new Comment();
         $comment->content = request('content');
         $comment->ticket_id = request('ticket_id');
         $comment->user_id = \Auth::user()->id;
+        $ticket = $comment->ticket;
+        if (\Auth::user()->id == $comment->ticket->user_id) {
+            $ticket->status = 5;
+        } else {
+            $ticket->status = 4;
+        }
+        $ticket->save();
         $comment->save();
 
-         return redirect('tickets/' . $comment->ticket->slug)
+        return redirect('tickets/' . $comment->ticket->slug)
         ->withStatus('Your comment has been added.');
     }
 
