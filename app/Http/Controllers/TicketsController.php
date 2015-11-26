@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Ticket;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TicketFormRequest;
 
 class TicketsController extends Controller
 {
@@ -40,7 +41,7 @@ class TicketsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TicketFormRequest $request)
     {
         $ticket = new Ticket();
         $ticket->title = request('title');
@@ -63,6 +64,11 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::whereSlug($slug)->firstOrFail();
 
+        if (Auth::user()->id !=  $ticket->user_id) {
+            return redirect('tickets')
+            ->withErrors('You don\'t have permission to view this ticket ' . $ticket->slug);
+        }
+
         return view('tickets.show', compact('ticket'));
     }
 
@@ -76,6 +82,11 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::whereSlug($slug)->firstOrFail();
 
+        if (Auth::user()->id !=  $ticket->user_id) {
+            return redirect('tickets')
+            ->withErrors('You don\'t have permission to edit this ticket ' . $ticket->slug);
+        }
+
         return view('tickets.edit', compact('ticket'));
     }
 
@@ -86,7 +97,7 @@ class TicketsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(TicketFormRequest $request, $slug)
     {
         $ticket = Ticket::whereSlug($slug)->firstOrFail();
         $ticket->title = request('title');
