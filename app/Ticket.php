@@ -10,4 +10,9 @@ class Ticket extends Model
     {
     	return $this->belongsTo('App\User');
     }
+
+    public function comments($value='')
+    {
+    	return $this->hasMany('App\Comment', 'ticket_id');
+    }
 }
