@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Comment;
 use App\Ticket;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketFormRequest;
@@ -40,7 +41,11 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        return view('tickets.create');
+        $tickets = Ticket::whereStatus(3)->lists('slug', 'id')->all();
+        //$comments = Comment::whereId(11)->lists('content', 'id')->all();
+        //var_dump($comments);
+
+        return view('tickets.create', compact('tickets'));
     }
 
     /**

@@ -28,6 +28,11 @@
                     </div>
 
                     <div class="form-group">
+                        <!--select name="status" class="form-control">
+                            @foreach ($tickets as $key => $slug)
+                                <option value="{{ $key }}">{{ $slug }}</option>    
+                            @endforeach
+                        </select-->
                         <div class="col-md-10 col-md-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
