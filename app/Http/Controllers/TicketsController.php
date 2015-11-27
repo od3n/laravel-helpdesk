@@ -12,6 +12,11 @@ use App\Http\Requests\TicketFormRequest;
 
 class TicketsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +24,11 @@ class TicketsController extends Controller
      */
     public function index()
     {
-        //$tickets = Ticket::all();
-        $tickets = Ticket::where('user_id', Auth::user()->id)->get();
+        if (in_array(Auth::user()->id, [1, 2])) {
+            $tickets = Ticket::all();
+        } else {
+            $tickets = Ticket::where('user_id', Auth::user()->id)->get();
+        }
 
         return view('tickets.index', compact('tickets'));
     }
@@ -65,7 +73,8 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::whereSlug($slug)->firstOrFail();
 
-        if (Auth::user()->id !=  $ticket->user_id) {
+        if (Auth::user()->id !=  $ticket->user_id && !in_array(Auth::user()->id, [1, 2])) {
+            
             return redirect('tickets')
             ->withErrors('You don\'t have permission to view this ticket ' . $ticket->slug);
         }
@@ -83,7 +92,13 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::whereSlug($slug)->firstOrFail();
 
-        if (Auth::user()->id !=  $ticket->user_id) {
+        if ($ticket->status == 3) {
+            return redirect('tickets')
+            ->withErrors('Your ticket already closed');
+        }
+
+        if (Auth::user()->id !=  $ticket->user_id && !in_array(Auth::user()->id, [1, 2])) {
+
             return redirect('tickets')
             ->withErrors('You don\'t have permission to edit this ticket ' . $ticket->slug);
         }
@@ -103,7 +118,9 @@ class TicketsController extends Controller
         $ticket = Ticket::whereSlug($slug)->firstOrFail();
         $ticket->title = request('title');
         $ticket->content = request('content');
-        $ticket->status = request('status');
+        if (request('status') == 'on') {
+            $ticket->status = 3;
+        }
         $ticket->save();
 
         return redirect('tickets')

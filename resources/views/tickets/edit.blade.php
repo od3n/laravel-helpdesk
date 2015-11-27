@@ -28,13 +28,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="content" class="col-lg-2 control-label">Status</label>
                         <div class="col-lg-10">
-                            <select name="status" class="form-control">
-                                @foreach (get_statuses() as $key => $status)
-                                    <option value="{{ $key }}" @if ($ticket->status == $key) selected @endif>{{ $status }}</option>
-                                @endforeach
-                            </select>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="status"><span class="checkbox-material"></span></span> Close this ticket?
+                                </label>
+                            </div>
                         </div>
                     </div>
 

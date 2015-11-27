@@ -16,7 +16,7 @@ function set_status($status)
 	$statuses = [
 	    1 => 'Pending', 
 	    2 => 'In Progress', 
-	    3 => 'Completed',
+	    3 => 'Closed',
 	    4 => 'Awaiting Customer reply',
 	    5 => 'Awaiting Support Agent reply'
 	];
@@ -29,7 +29,7 @@ function get_statuses()
 	$statuses = [
 	    1 => 'Pending', 
 	    2 => 'In Progress', 
-	    3 => 'Completed',
+	    3 => 'Closed',
 	    4 => 'Awaiting Customer reply',
 	    5 => 'Awaiting Support Agent reply'
 	];

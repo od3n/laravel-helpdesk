@@ -20,7 +20,7 @@
                 <li class="{{ set_active('contact') }}"><a href="{{ url('/contact') }}">Contact</a></li>
                 @if (Auth::check())
                     <li class="{{ set_active('tickets/create') }}"><a href="{{ url('/tickets/create') }}">Submit new Ticket</a></li>
-                    <li class="{{ set_active('tickets') }}"><a href="{{ url('/tickets') }}">View Tickets</a></li>
+                    <li class="{{ set_active('tickets/*') }}"><a href="{{ url('/tickets') }}">View Tickets</a></li>
                 @endif
                 <li class="dropdown {{ set_active('users/*') }} {{ set_active('password/*') }}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Member <span class="caret"></span></a>
