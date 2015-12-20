@@ -11,6 +11,10 @@
 
             @if (Auth::check())
                 <p>Only visible for logged in users.</p>
+            @else
+                <h3>Demo Accounts</h3>
+                <p>Email : agent1@example.com <br />Password : 123465</p>
+                <p>Email : customer1@example.com <br />Password : 123465</p>
             @endif
 
         </div>
